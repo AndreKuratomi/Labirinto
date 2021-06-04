@@ -1,0 +1,100 @@
+html, body, main, section, div, h1 {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0.5rem;
+}
+
+h1 {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+section#labyrinth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Elementos do labirinto */
+#lines {
+    display: flex;
+}
+
+#jogador {
+    background-color: #FF0;
+    border-radius: 50%;
+    width: 16.5px;
+    height: 16.5px;
+}
+
+#via {
+    background-color: #AAA;
+    border: 1px solid #000;
+    width: 16.5px;
+    height: 16.5px;
+}
+
+#parede {
+    background-color: #000;
+    width: 16.5px;
+    height: 16.5px;
+}
+
+#chegada {
+    background-color: #0F0;
+    border: 1px solid #000;
+    border-right: #0F0;
+    width: 16.5px;
+    height: 16.5px;
+}
+
+/* Mensagens */
+.avisos {
+    display: none;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#entrada {
+    display: block;
+}
+#derrota {
+
+}
+#vitoria {
+
+}
+
+@media (min-width: 768px) {
+    
+    body {
+        margin: 0.5rem;
+    }
+    
+    #jogador {
+        width: 33px;
+        height: 33px;
+    }
+    
+    #via {
+        width: 33px;
+        height: 33px;
+    }
+    
+    #parede {
+        width: 33px;
+        height: 33px;
+    }
+    
+    #chegada {
+        width: 33px;
+        height: 33px;
+    }
+}
