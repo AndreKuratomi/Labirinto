@@ -1,3 +1,5 @@
+'use strict';
+
 const map = [
     "WWWWWWWWWWWWWWWWWWWWW",
     "W   W     W     W W W",
@@ -19,7 +21,6 @@ const map = [
 //CRIANDO ELEMENTOS:
 
 //Do array para HTML:
-
 const repositorio = window.document.getElementById('labyrinth');
 
 for (let i = 0; i < map.length; i++) {
@@ -61,52 +62,97 @@ entrada.id = "entrada";
 avisos1.appendChild(entrada);
 
 const avisos2 = window.document.getElementById('labyrinth');
+const parada = window.document.createElement('div');
+parada.innerText = "O jogador não é um fantasma para atravessar paredes, viu?";
+parada.classList = "avisos";
+parada.id = "parada";
+avisos2.appendChild(parada);
+
+const avisos3 = window.document.getElementById('labyrinth');
 const derrota = window.document.createElement('div');
 derrota.innerText = "Pois é, a frase de entrada continua valendo...! MUAHAHAHAHAHAHAHAAAAA!";
 derrota.classList = "avisos";
 derrota.id = "derrota";
-avisos2.appendChild(derrota);
+avisos3.appendChild(derrota);
 
-const avisos3 = window.document.getElementById('labyrinth');
+const avisos4 = window.document.getElementById('labyrinth');
 const vitoria = window.document.createElement('div');
 vitoria.innerText = "Puxa vida, conseguiu...! PARABÉNS!";
 vitoria.classList = "avisos";
 vitoria.id = "vitoria";
-avisos2.appendChild(vitoria);
+avisos4.appendChild(vitoria);
 
 
-//Movimentação:
+//MOVIMENTAÇÃO:
+const jogador = window.document.getElementById('jogador');
+// console.log(jogador)
+const via = window.document.getElementById('via');
+const parede = window.document.getElementById('parede');
+const chegada = window.document.getElementById('chegada');
 
-// Orientação
+document.addEventListener('keydown', (evt) => {
+    const keyName = evt.key;
+    let i = 9;
+    let j = 0;
+    let player = map[i][j]
+    if (keyName === "ArrowDown") {
+        entrada.style.display = "none";
+        (i += 1);
+        console.log(player)
+        if (player === ' ') {
+            console.log('Davis')
+            // ' '.id = "jogador";
+        }
+        if (player === 'W') {
+            console.log('batatas')
+            parada.style.display = "block";
+        }
+    }
+    if (keyName === "ArrowUp") {
+        entrada.style.display = "none";
+        player = map[i++][j];
+        console.log(player)
+        if (player === ' ') {
+            console.log('homero')
+            // via.id = "jogador";
+        }
+        if (player === 'W') {
+            console.log('banana')
+            parada.style.display = "block";
+        }
 
-// Escolha uma opção: 
-//A) use um DIV absolutamente posicionado para representar a posição atual do jogador no labirinto, ou 
-//B) faça o DIV do jogador ser anexado (appended) a uma célula DIV pelo mesmo motivo.
-
-//Você precisa registrar (ou receber via solicitação) a posição atual do jogador no labirinto (índices de linha e de coluna). 
-//Você pode fazer isso de uma entre várias maneiras. 
-
-//Você poderia manter um registro persistente da posição do jogador em um, digamos, array ou objeto global cuja função é a de 
-//registrar a posição atual do jogador. 
-//Você poderia atualizar seu array de mapa constantemente para refletir o movimento do jogador (mover o "S" pelo mapa). 
-
-//Você pode manter seus índices em atributos de dados em seu HTML e acessá-los através da propriedade DIV de jogador "parentElement" (no caso do 3B). 
-//Ou você poderia fazer um pouco de matemática na posição atual do DIV do jogador na tela, relativo à posição inicial do elemento 
-//de início na tela e ao tamanho das células (no caso do 3A).
-// O movimento pode ser realizado de algumas maneiras diferentes: No caso do 3A, mude a posição absoluta do DIV do jogador. 
-//Ou, no caso do 3B, faça o append do DIV do jogador ao próximo DIV de célula. 
-
-//(Você poderia usar "document.querySelector()" e o seletor CSS de atributos para obter o próximo elemento de célula pelos índices 
-//que denominou via atributos de dados.)
-
-// Requisitos
-// Configure um ou mais handlers de evento para mover seu DIV de jogador da mesma forma que fez nas avaliações anteriores sobre 
-// eventos de teclado.
-// Não permita que o jogador atravesse uma parede ou saia dos limites do labirinto.
-
-
-
-
+    } else if (keyName === "ArrowRight") {
+        map[i][j+=5];
+        console.log(player)
+        console.log(j)
+        entrada.style.display = "none";
+        if (player === ' ') {
+            console.log('banana')
+            // via.id = "jogador";
+        }
+        else if (player === 'W') {
+            parada.style.display = "block";
+        }
+        else if (player === 'F') {
+            chegada.id = "jogador";
+            vitoria.style.display = "block";
+        }
+  
+      
+    } else if (keyName === "ArrowLeft") {
+        player = map[i][j-1]
+        console.log(player)
+        entrada.style.display = "none";
+        if (player === " ") {
+            via.id = "jogador";
+        }
+        if (player === 'W') {
+            parada.style.display = "block";
+        }
+    }
+});
+  
+//tempo para alcançar a chegada: 60000
 
 
 // Para um desafio extra
