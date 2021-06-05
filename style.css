@@ -30,6 +30,7 @@ section#labyrinth {
     border-radius: 50%;
     width: 16.5px;
     height: 16.5px;
+    z-index: -1;
 }
 
 #via {
@@ -64,6 +65,9 @@ section#labyrinth {
 
 #entrada {
     display: block;
+}
+#parada {
+    display: none;
 }
 #derrota {
 
