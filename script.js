@@ -31,27 +31,44 @@ for (let i = 0; i < map.length; i++) {
     for (let j = 0; j < map[i].length; j++) {
         if (map[i][j] === "S") {
             let filhos = document.createElement('div');
-            filhos.id = 'jogador';
+            filhos.dataset.column = j;
+            filhos.dataset.row = i;
+            filhos.id = 'start';
             linha.appendChild(filhos);
         }
         if (map[i][j] === " ") {
             let filhos = document.createElement('div');
-            filhos.id = 'via';
+            filhos.dataset.column = j;
+            filhos.dataset.row = i;
+            filhos.classList = 'via';
             linha.appendChild(filhos);
         }
         if (map[i][j] === "W") {
             let filhos = document.createElement('div');
-            filhos.id = 'parede';
+            filhos.dataset.column = j;
+            filhos.dataset.row = i;
+            filhos.classList = 'parede';
             linha.appendChild(filhos);
         }
         if (map[i][j] === "F") {
             let filhos = document.createElement('div');
+            filhos.dataset.column = j;
+            filhos.dataset.row = i;
             filhos.id = 'chegada';
             linha.appendChild(filhos);
         }
     }
     repositorio.appendChild(linha);
 }
+
+//Criando o jogador e acoplando-o:
+const start = window.document.getElementById('start');
+const jogador = window.document.createElement('div');
+jogador.id = "jogador";
+jogador.dataset.column = 0;
+jogador.dataset.row = 9;
+start.appendChild(jogador);
+
 
 //Mensagens:
 const avisos1 = window.document.getElementById('labyrinth');
@@ -67,13 +84,13 @@ parada.innerText = "O jogador não é um fantasma para atravessar paredes, viu?"
 parada.classList = "avisos";
 parada.id = "parada";
 avisos2.appendChild(parada);
-
-const avisos3 = window.document.getElementById('labyrinth');
-const derrota = window.document.createElement('div');
-derrota.innerText = "Pois é, a frase de entrada continua valendo...! MUAHAHAHAHAHAHAHAAAAA!";
-derrota.classList = "avisos";
-derrota.id = "derrota";
-avisos3.appendChild(derrota);
+// FUTURAMENTE
+// const avisos3 = window.document.getElementById('labyrinth');
+// const derrota = window.document.createElement('div');
+// derrota.innerText = "Pois é, a frase de entrada continua valendo...! MUAHAHAHAHAHAHAHAAAAA!";
+// derrota.classList = "avisos";
+// derrota.id = "derrota";
+// avisos3.appendChild(derrota);
 
 const avisos4 = window.document.getElementById('labyrinth');
 const vitoria = window.document.createElement('div');
@@ -84,86 +101,85 @@ avisos4.appendChild(vitoria);
 
 
 //MOVIMENTAÇÃO:
-const jogador = window.document.getElementById('jogador');
-// console.log(jogador)
-const via = window.document.getElementById('via');
-const parede = window.document.getElementById('parede');
+
 const chegada = window.document.getElementById('chegada');
 
 document.addEventListener('keydown', (evt) => {
     const keyName = evt.key;
-    let i = 9;
-    let j = 0;
-    let player = map[i][j]
+    let row = Number(jogador.dataset.row);
+    let column = Number(jogador.dataset.column);
+
     if (keyName === "ArrowDown") {
         entrada.style.display = "none";
-        (i += 1);
-        console.log(player)
-        if (player === ' ') {
-            console.log('Davis')
-            // ' '.id = "jogador";
+        row += 1;
+        let movimento = window.document.querySelector(`[data-row="${row}"][data-column="${column}"]`);
+        if (movimento.className === 'via') {
+            parada.style.display = "none";
+            jogador.dataset.row = row;
+            movimento.appendChild(jogador);
         }
-        if (player === 'W') {
-            console.log('batatas')
+        else if (movimento.className === 'parede') {
             parada.style.display = "block";
         }
     }
+    
     if (keyName === "ArrowUp") {
         entrada.style.display = "none";
-        player = map[i++][j];
-        console.log(player)
-        if (player === ' ') {
-            console.log('homero')
-            // via.id = "jogador";
+        row -= 1;
+        let movimento = window.document.querySelector(`[data-row="${row}"][data-column="${column}"]`);
+        if (movimento.className === 'via') {
+            parada.style.display = "none";
+            jogador.dataset.row = row;
+            movimento.appendChild(jogador);
         }
-        if (player === 'W') {
-            console.log('banana')
+        else if (movimento.className === 'parede') {
             parada.style.display = "block";
         }
+    }
 
-    } else if (keyName === "ArrowRight") {
-        map[i][j+=5];
-        console.log(player)
-        console.log(j)
+    if (keyName === "ArrowRight") {
         entrada.style.display = "none";
-        if (player === ' ') {
-            console.log('banana')
-            // via.id = "jogador";
+        column += 1;
+        let movimento = window.document.querySelector(`[data-row="${row}"][data-column="${column}"]`);
+        if (movimento.className === 'via') {
+            parada.style.display = "none";
+            jogador.dataset.column = column;
+            movimento.appendChild(jogador);
         }
-        else if (player === 'W') {
+        else if (movimento.className === 'parede') {
             parada.style.display = "block";
         }
-        else if (player === 'F') {
-            chegada.id = "jogador";
+        else if (movimento.id === 'chegada') {
+            const keyName = !evt.key;
+            //invalidar teclas
+            movimento.appendChild(jogador);
+            parada.style.display = "none";
             vitoria.style.display = "block";
         }
-  
+    }
       
-    } else if (keyName === "ArrowLeft") {
-        player = map[i][j-1]
-        console.log(player)
+    if (keyName === "ArrowLeft") {
         entrada.style.display = "none";
-        if (player === " ") {
-            via.id = "jogador";
+        column -= 1;
+        let movimento = window.document.querySelector(`[data-row="${row}"][data-column="${column}"]`);
+        if (movimento.className === 'via') {
+            jogador.dataset.column = column;
+            movimento.appendChild(jogador);
+            parada.style.display = "none";
         }
-        if (player === 'W') {
+        else if (movimento.className === 'parede') {
             parada.style.display = "block";
         }
     }
 });
-  
-//tempo para alcançar a chegada: 60000
+// FUTURAMENTE
+//TEMPO DE MOVIMENTAÇÂO
+// const failLockedUser = () => {
+//     let laugh = document.createElement("audio");
+//     if (laugh.canPlayType("audio/mpeg")) {
+//         laugh.setAttribute("src","./assets/soundEffects/single-falling-chip.mp3")
+//     }
 
-
-// Para um desafio extra
-// Adicione animações CSS3 para permitir que os jogadores se movam suavemente de uma célula para outra.
-// Você pode adicionar os seguintes atributos CSS ao DIV que representa o jogador:
-// animation-duration: 100ms;
-// Você pode criar classes com animações CSS3 associadas representando as direções de movimento, por exemplo:
-// @keyframes slideRight {
-// from {margin-left: -33px;}
-// to {margin-left: 0;}
+//     laugh.play();
 // }
-// .slideRight {animation-name: slideRight;}
-// Você pode precisar remover a classe associada à animação anterior antes de poder adicioná-la de volta e executá-la novamente. Você pode achar útil usar window.setTimeout para especificar uma função para remover as classes de animação (depois de permitir um timeout suficiente para que a animação seja concluída).
-
+//tempo para alcançar a chegada: 60000
