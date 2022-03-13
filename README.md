@@ -9,11 +9,11 @@
 
 # Descrição
 
-<p><b>Labirinto!</b> é um serviço simples . Esta aplicação utiliza HTML5, CSS3, DOM e a linguagem Javascript</p>
+<p><b>Labirinto!</b> é um serviço simples que cria um labirinto para o usuário jogar. Esta aplicação utiliza HTML5, CSS3, DOM e a linguagem Javascript</p>
 <br>
 
 <p>Link gitlab:</p>
-Link Gitlab: https://abkura.gitlab.io/labirinto/
+https://abkura.gitlab.io/labirinto/
 
 # Instalação
 
